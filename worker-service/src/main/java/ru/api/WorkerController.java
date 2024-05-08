@@ -24,6 +24,20 @@ public class WorkerController {
         return ResponseEntity.ok(repository.findAll());
     }
 
+    @PostMapping()
+    public void createWorker(@PathVariable long id, Worker worker) {
+        repository.save(worker);
+    }
+
+    @PutMapping()
+    public void updateWorker(@PathVariable long id, Worker worker) {
+        Worker oldWorker = repository.getById(id);
+        if (oldWorker == null) {
+            throw new RuntimeException("Данного пользователя нет");
+        }
+        repository.save(worker);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Worker> getById(@PathVariable Long id) {
         return ResponseEntity.ok(repository.findById(id).orElseThrow());
